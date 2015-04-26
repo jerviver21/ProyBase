@@ -1,0 +1,121 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>edu.paideia.base</groupId>
+  <artifactId>ProyBase</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>ProyBase</name>
+  <description>Base para spring 4, sin spring boot</description>
+  
+  <!-- Necesario para el despliegue del contenedor de Spring -->
+  <parent>
+  	<groupId>org.springframework.boot</groupId>
+  	<artifactId>spring-boot-starter-parent</artifactId>
+  	<version>1.2.3.RELEASE</version>
+  </parent>
+  
+ 	<dependencies>
+ 		<!-- Spring -->
+ 		<!-- Necesario para el despliegue del contenedor de Spring -->
+ 		<dependency>
+	  		<groupId>org.springframework.boot</groupId>
+	  		<artifactId>spring-boot-starter-web</artifactId>
+	  	</dependency>
+	  	<!-- Necesario para poder manejar Spring Data -->
+	  	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- Necesario para el despliegue que permite interpretar html, angular y javascript -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+	  	<!-- Esto se pone si se desea desplegar la aplicación dentro de un servidor de aplicaciones, y empaquetarlo en un war... si se desea desplegar como stanalone en un jar, esto no iria -->
+	  	<dependency>
+	  		<groupId>org.springframework.boot</groupId>
+	  		<artifactId>spring-boot-starter-tomcat</artifactId>
+	  		<scope>provided</scope>
+	  	</dependency>
+	  	
+
+	  	<!-- ** -->
+	  	<!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>1.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.2.4.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- ** -->
+	  	<!-- PostgreSQL -->
+	  	<dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
+	  	<!-- ** -->
+	  	<!-- Google guava utilidades -->
+	  	<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
+	  	
+	  	<!-- ** -->
+	  	
+	  	
+	</dependencies>
+	
+	
+	<properties>
+		<java-version>1.7</java-version>
+	</properties>
+	
+	<build>
+		<plugins>
+			<!-- Plugin de spring boot para maven, le permite empaquetar un jar que permita el despliegue del servidor -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- Esto es importante para evitar conflictos de versión de maven -->
+			<plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+           </plugin>
+		</plugins>
+	</build>
+	
+	<!-- Necesario para ubicar los repositorios de spring -->
+	<repositories>
+		<repository>
+		 <id>spring-releases</id>
+		 <url>https://repo.spring.io/libs-release</url>
+		</repository>
+	</repositories>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+		 	<url>https://repo.spring.io/libs-release</url>	
+		</pluginRepository>
+	</pluginRepositories>
+  
+  
+  
+</project>

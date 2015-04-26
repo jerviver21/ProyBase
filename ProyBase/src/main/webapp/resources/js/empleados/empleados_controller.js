@@ -3,7 +3,7 @@ angular.module('EmpleadosModule')
 		var self = this;
 		self.empleados = [];
 		
-		$http.get('/ProyBase/empleados').then(function(response) {
+		$http.get('/ProyBase/services/empleados').then(function(response) {
 			self.empleados = response.data;
 		}, function(errResponse) {
 			console.error('Error consultando el servicio ... ');

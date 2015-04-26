@@ -5,41 +5,59 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>ProyBase</name>
-  <description>Base para spring 4</description>
+  <description>Base para spring 4, sin spring boot</description>
   
-  <!-- Necesario para el despliegue del contenedor de Spring -->
-  <parent>
-  	<groupId>org.springframework.boot</groupId>
-  	<artifactId>spring-boot-starter-parent</artifactId>
-  	<version>1.2.3.RELEASE</version>
-  </parent>
-  
- 	<dependencies>
- 		<!-- Spring -->
- 		<!-- Necesario para el despliegue del contenedor de Spring -->
- 		<dependency>
-	  		<groupId>org.springframework.boot</groupId>
-	  		<artifactId>spring-boot-starter-web</artifactId>
-	  	</dependency>
-	  	<!-- Necesario para poder manejar Spring Data -->
-	  	<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-	  	<!-- Esto se pone si se desea desplegar la aplicación dentro de un servidor de aplicaciones, y empaquetarlo en un war... si se desea desplegar como stanalone en un jar, esto no iria -->
-	  	<dependency>
-	  		<groupId>org.springframework.boot</groupId>
-	  		<artifactId>spring-boot-starter-tomcat</artifactId>
-	  		<scope>provided</scope>
-	  	</dependency>
-	  	
-
-	  	<!-- ** -->
-	  	<!-- Hibernate -->
+  <build>
+  	<finalName>ProyBase</finalName>
+        <plugins>
+        	<plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <port>8080</port>
+                    <path>/${project.build.finalName}</path>
+                    <additionalConfigFilesDir>${basedir}/src/main/tomcat/conf</additionalConfigFilesDir>
+                    <systemProperties>
+                        <log4j.configuration>file:./src/main/tomcat/conf/log4j.xml</log4j.configuration>
+                    </systemProperties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                        <version>1.2.16</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                        <version>1.7.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                        <version>1.7.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>9.1-901-1.jdbc4</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+           </plugin>
+        </plugins>
+    </build>
+ 
+    <dependencies>
+        <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
@@ -56,65 +74,122 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- ** -->
-	  	<!-- PostgreSQL -->
-	  	<dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
-        </dependency>
-	  	<!-- ** -->
-	  	<!-- Google guava utilidades -->
-	  	<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>18.0</version>
+ 
+        <!-- Spring -->
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>4.1.6.RELEASE</version>
 		</dependency>
-	  	
-	  	<!-- ** -->
-	  	
-	  	
-	</dependencies>
-	
-	
-	<properties>
-		<java-version>1.7</java-version>
-	</properties>
-	
-	<build>
-		<plugins>
-			<!-- Plugin de spring boot para maven -->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<!-- Esto es importante para evitar conflictos de versión de maven -->
-			<plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-           </plugin>
-		</plugins>
-	</build>
-	
-	<!-- Necesario para ubicar los repositorios de spring -->
-	<repositories>
-		<repository>
-		 <id>spring-releases</id>
-		 <url>https://repo.spring.io/libs-release</url>
-		</repository>
-	</repositories>
-	
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-releases</id>
-		 	<url>https://repo.spring.io/libs-release</url>	
-		</pluginRepository>
-	</pluginRepositories>
-  
-  
-  
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.1.6.RELEASE</version>
+        </dependency>   
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.1.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>4.1.6.RELEASE</version>
+        </dependency>
+        <dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>1.8.0.RELEASE</version>
+		</dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+ 
+        <!-- JSON -->
+        <dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.5.2</version>
+		</dependency>
+        <dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.5.2</version>
+		</dependency>	
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.5.2</version>
+		</dependency>
+
+        <!-- Servlet -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+ 
+        <!-- Utilities -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>10.0.1</version>
+        </dependency>
+ 
+       <!-- Log -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <artifactId>commons-logging</artifactId>
+            <groupId>commons-logging</groupId>
+            <version>1.1.1</version>
+        </dependency>
+    </dependencies>
 </project>

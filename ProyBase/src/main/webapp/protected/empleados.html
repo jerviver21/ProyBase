@@ -7,7 +7,7 @@
 	<body ng-app="EmpleadosModule" ng-controller="EmpleadosCtrl as ctrl">
 	
 		<h1>Empleados</h1>
-		<div ng-repeat="empleado in EmpleadosCtrl.empleados">
+		<div ng-repeat="empleado in ctrl.empleados">
 			<div><span ng-bind="empleado.id"></span></div>
 			<div><span ng-bind="empleado.nombre"></span></div>
 			<div><span ng-bind="empleado.numId"></span></div>
